@@ -29,7 +29,7 @@ services:
     container_name: videgrenier_phpmyadmin
     restart: always
     ports:
-      - "8090:80"
+      - "8094:80"
     environment:
       PMA_HOST: db
       PMA_USER: user

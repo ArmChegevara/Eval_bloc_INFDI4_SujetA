@@ -20,6 +20,18 @@ services:
     volumes:
       - db_data_recette:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+  phpmyadmin:
+  image: phpmyadmin/phpmyadmin
+  container_name: videgrenier_phpmyadmin_recette
+  restart: always
+  ports:
+    - "8094:80"
+  environment:
+    PMA_HOST: videgrenier_db_recette
+    PMA_USER: root
+    PMA_PASSWORD: root
+  depends_on:
+    - db
 
 volumes:
   db_data_recette:
