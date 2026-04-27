@@ -23,7 +23,7 @@ class User extends \Core\Controller
      */
     public function loginAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
 
             // TODO: Validation
@@ -42,17 +42,20 @@ class User extends \Core\Controller
      */
     public function registerAction()
     {
-        if(isset($_POST['submit'])){
+        if (isset($_POST['submit'])) {
             $f = $_POST;
 
-            if($f['password'] !== $f['password-check']){
+            if ($f['password'] !== $f['password-check']) {
                 // TODO: Gestion d'erreur côté utilisateur
             }
 
-            // validation
+            $userID = $this->register($f);
 
-            $this->register($f);
-            // TODO: Rappeler la fonction de login pour connecter l'utilisateur
+            if ($userID) {
+                $this->login($f);
+                header('Location: /account');
+                exit;
+            }
         }
 
         View::renderTemplate('User/register.html');
@@ -88,16 +91,16 @@ class User extends \Core\Controller
             ]);
 
             return $userID;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error : utiliser la fonction en dessous
             /* Utility\Flash::danger($ex->getMessage());*/
         }
     }
 
-    private function login($data){
+    private function login($data)
+    {
         try {
-            if(!isset($data['email'])){
+            if (!isset($data['email'])) {
                 throw new Exception('TODO');
             }
 
@@ -117,7 +120,6 @@ class User extends \Core\Controller
             );
 
             return true;
-
         } catch (Exception $ex) {
             // TODO : Set flash if error
             /* Utility\Flash::danger($ex->getMessage());*/
@@ -132,7 +134,8 @@ class User extends \Core\Controller
      * @return boolean
      * @since 1.0.2
      */
-    public function logoutAction() {
+    public function logoutAction()
+    {
 
         /*
         if (isset($_COOKIE[$cookie])){
@@ -145,17 +148,21 @@ class User extends \Core\Controller
 
         if (ini_get("session.use_cookies")) {
             $params = session_get_cookie_params();
-            setcookie(session_name(), '', time() - 42000,
-                $params["path"], $params["domain"],
-                $params["secure"], $params["httponly"]
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
             );
         }
 
         session_destroy();
 
-        header ("Location: /");
+        header("Location: /");
 
         return true;
     }
-
 }
