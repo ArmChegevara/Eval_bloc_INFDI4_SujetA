@@ -573,6 +573,11 @@
     width: 130% !important; // FIX INTERNET EXPLORER ;
 }
 
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /*
 * Content Index END
 */
