@@ -18,8 +18,7 @@
                                             <span class="visible-xs">À la une</span>
                                             <span class="hidden-xs">À la une</span>
                                         </a>
-                                    </li>
-                                    <li><a href="#">Autour de moi</a></li>
+                                    <a onclick="getProductsAndRender('location')">Autour de moi</a></li>
                                 </ul>
                             </div>
                             <div class="col-lg-2 col-sm-2 col-xs-4">
@@ -60,33 +59,44 @@
 
         function getProductsAndRender(option = ''){
             $.ajax({
-                url: "/api/products" + '?sort=' + option,
-            }).done(function(result) {
-                $('#articlelist').empty();
-                for(let i = 0; i < result.length; i++){
-                    renderProduct(result[i])
-                }
-            });
+    url: "/api/products" + '?sort=' + option,
+        }).done(function(result) {
+
+            $('#articlelist').empty();
+
+            // 👉 CHÈQUE AJOUTÉ
+            if (!Array.isArray(result) || result.length === 0) {
+                $('#articlelist').html('<p>Aucun article disponible.</p>');
+                return;
+            }
+
+            for(let i = 0; i < result.length; i++){
+                renderProduct(result[i]);
+            }
+});
         }
 
-        function renderProduct($product){
-             $('<div class="col-lg-4 col-sm-6 articleitem" id="article-pattern">' +
-                '                                <div class="b-article">' +
-                '                                    <div class="v-img">' +
-                '                                        <a href="/product/'+ $product.id + '">' +
-                '                                            <img src="/storage/'+ $product.picture +'" alt=""></a>' +
-                '                                    </div>' +
-                '                                    <div class="v-desc">' +
-                '                                        <a href="/product/'+ $product.id + '">'+ $product.name+'</a>' +
-                '                                    </div>' +
-                '                                    <p>'+ $product.description.slice(0, 20) + '...</p>' +
-                '                                    <div class="v-views">' +
-                '                                        '+$product.views+' vues' +
-                '                                    </div>' +
-                '                                </div>' +
-                '</div>')
-             .appendTo($('#articlelist'));
-        }
+            function renderProduct(product){
+        const description = product.description ? product.description.slice(0, 20) + '...' : '';
+        const picture = product.picture ? product.picture : 'default.png';
+
+        $('<div class="col-lg-4 col-sm-6 articleitem">' +
+            '<div class="b-article">' +
+                '<div class="v-img">' +
+                    '<a href="/product/' + product.id + '">' +
+                        '<img src="/storage/' + picture + '" alt="">' +
+                    '</a>' +
+                '</div>' +
+                '<div class="v-desc">' +
+                    '<a href="/product/' + product.id + '">' + product.name + '</a>' +
+                '</div>' +
+                '<p>' + description + '</p>' +
+                '<div class="v-views">' +
+                    product.views + ' vues' +
+                '</div>' +
+            '</div>' +
+        '</div>').appendTo($('#articlelist'));
+}
 
         $( document ).ready(function() {
             getProductsAndRender();
