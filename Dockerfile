@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 RUN apt-get update && apt-get install -y unzip git \
     && docker-php-ext-install pdo pdo_mysql mysqli \
@@ -20,5 +20,9 @@ RUN printf '<Directory /var/www/html/public>\n\
     Require all granted\n\
 </Directory>\n' > /etc/apache2/conf-available/public.conf \
     && a2enconf public
+
+RUN mkdir -p /var/www/html/public/storage \
+    && chown -R www-data:www-data /var/www/html/public/storage \
+    && chmod -R 775 /var/www/html/public/storage
 
 EXPOSE 80

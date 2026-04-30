@@ -1,0 +1,1 @@
+{"version":2,"defects":{"UploadTest::testUploadWithoutFileThrowsException":7,"UploadTest::testUploadWithUploadErrorThrowsException":7,"UploadTest::testUploadRejectsInvalidFileType":7},"times":{"UploadTest::testUploadWithoutFileThrowsException":0.002,"UploadTest::testUploadWithUploadErrorThrowsException":0.002,"UploadTest::testUploadRejectsInvalidFileType":0.001}}

@@ -1083,7 +1083,8 @@ video {
         color: #ea2c5a; }
 
 .cb-content {
-  width: 130% !important; }
+  width: 100% !important;
+}
 
 /*
 * Content Index END
@@ -2475,6 +2476,33 @@ footer {
     z-index: 200;
     background: #fff;
 } 
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.content-wrapper > .container {
+    max-width: 1180px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#articlelist {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+#articlelist .articleitem {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 35px;
+}
+
+.b-article .v-img {
+    height: 180px;
+}
 
 /*
 * Content Upload END
