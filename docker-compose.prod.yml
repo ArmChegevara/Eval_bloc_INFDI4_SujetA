@@ -16,10 +16,23 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "3309:3306"
+      - "3307:3306"
     volumes:
       - db_data_prod:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: videgrenier_phpmyadmin_prod
+    restart: always
+    ports:
+      - "8099:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: user
+      PMA_PASSWORD: password
+    depends_on:
+      - db
 
 volumes:
   db_data_prod:
